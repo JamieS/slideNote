@@ -1,2 +1,1 @@
-body { height: 2000px; }
-#note { width: 640px; height: 140px; position: fixed; bottom: 0; background: rgb(220, 220, 220); }
+#note { -moz-box-shadow: -0.2em -0.2em 0.7em #333; -webkit-box-shadow: -0.2em -0.2em 0.7em #333; }

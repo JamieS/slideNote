@@ -1,14 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head profile="http://gmpg.org/xfn/11">
+		<link rel="stylesheet" type="text/css" href="css/demo.css" media="screen" />
 		<link rel="stylesheet" type="text/css" href="css/slidenote.css" media="screen" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.slidenote.js"></script>
-		<script type="text/javascript">
-		$(function() {
-			$('#note').slideNote();
-		});
-		</script>
 		<title>slideNote Demo</title>
 	</head>
 	<body>
@@ -23,6 +19,17 @@
 				This is the stuff we want to appear as we scroll down the page.
 			</p>
 		</div>
+		<script type="text/javascript">
+$('#note').slideNote();
+/*
+{
+	where: 500,
+	corner: 'left',
+	url: 'ajax.html',
+	container: 'note'
+}
+*/
+		</script>
 	</body>
 </html>
 	
