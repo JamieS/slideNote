@@ -6,7 +6,7 @@
 		return this.each(function() {
 			
 			var $note = $(this).toggle()
-									.css(opts.corner, -1 * $(this).width());
+									.css(opts.corner, -1 * $(this).outerWidth());
 			
 			if(opts.url !== null) {
 				_retrieveData($note, opts);
@@ -34,21 +34,20 @@
 	};
 	
 	function _slideOut($obj, opts) {
-		var direction = opts.corner === 'right' ? { 'right' : -1 * $obj.width() } : { 'left' : -1 * $obj.width() }
+		var direction = opts.corner === 'right' ? { 'right' : -1 * $obj.outerWidth() } : { 'left' : -1 * $obj.outerWidth() }
 		$obj.animate(direction, 1000, 'swing', function() {
 			$(this).stop(true).hide();
 		});
 	};
 	
 	function _retrieveData($obj, opts) {
-		
-		if(opts.container.indexOf('#') === 0) {
-			opts.container = opts.container.substring(1, opts.container.length);
+	
+		if(opts.container.length !== 0 && opts.container.indexOf('#') === -1) {
+			opts.container = '#' + opts.container;
 		}
 		
-		$obj.load(opts.url + ' ' + opts.container, function(data) {
-			$(this).append(data);
-		});
+		var sUrl = opts.container.length === 0 ? opts.url : opts.url + ' ' + opts.container;
+		$obj.load(sUrl);
 		
 	};
 
