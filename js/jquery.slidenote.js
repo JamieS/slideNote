@@ -1,3 +1,12 @@
+/*
+ * Slide Note
+ * A jQuery Plugin for flexible, customizable sliding notifications.
+ *
+ * Copyright 2010 Tom McFarlin, http://tommcfarlin.com
+ * Released under the MIT License
+ * More information: http://slidenote.info
+*/
+
 ;(function($) {
 
 	$.fn.slideNote = function(options) {
@@ -31,14 +40,14 @@
 	function _slideIn($obj, opts) {	
 		var direction = opts.corner === 'right' ? { 'right' : 0 } : { 'left' : 0 } ;
 		$obj.show().animate(direction, 1000, 'swing');
-	};
+	}
 	
 	function _slideOut($obj, opts) {
-		var direction = opts.corner === 'right' ? { 'right' : -1 * $obj.outerWidth() } : { 'left' : -1 * $obj.outerWidth() }
+		var direction = opts.corner === 'right' ? { 'right' : -1 * $obj.outerWidth() } : { 'left' : -1 * $obj.outerWidth() };
 		$obj.animate(direction, 1000, 'swing', function() {
 			$(this).stop(true).hide();
 		});
-	};
+	}
 	
 	function _retrieveData($obj, opts) {
 	
@@ -49,13 +58,13 @@
 		var sUrl = opts.container.length === 0 ? opts.url : opts.url + ' ' + opts.container;
 		$obj.load(sUrl);
 		
-	};
+	}
 
 	$.fn.slideNote.defaults = {
 		where: 640,
 		corner: 'right',
 		url: null,
 		container: ''
-	}
+	};
 	
 })(jQuery);
