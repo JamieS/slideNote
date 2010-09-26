@@ -1,76 +1,86 @@
-module("initialization");
-test("setup", function() {
+/*
+ * SlideNote Test Suite
+ * Unit Tests for SlideNote
+ * A JQuery Plugin for flexible, customizable sliding notifications.
+ *
+ * Copyright 2010 Tom McFarlin, http://tommcfarlin.com
+ * Released under the MIT License
+ * More information: http://slidenote.info
+*/
+
+/*-------------------------------------------------------*
+ * Initialization & Setup
+ *-------------------------------------------------------*/
+ 
+module("Initialization &amp; Setup");
+test("Setup", function() {
 	function defined() {
 		return $("#note").length;
 	}
 	equal(defined(), 1, 'A single instance of the note container is found.');
 });
 
-module("options");
-test("default where value", function() {
+test('Initialization', function() {
+	function init() {
+		$('#note').slideNote();
+		return $('#note').css('position') === 'fixed' && $('#note').css('bottom') === '0px';
+	}
+	equal(init(), true, 'Verifies that the initial CSS position and bottom values are properly set.');
+});
+
+/*-------------------------------------------------------*
+ * Default Option Values
+ *-------------------------------------------------------*/
+
+module("Default Option Values");
+test("where", function() {
 	function defaultWhereValue() {
 		return $.fn.slideNote.defaults.where
 	}
-	equal(defaultWhereValue(), 640, 'The default value for where to display the note if no value is defined.');
+	equal(defaultWhereValue(), 640, 'At what scroll position the note will be displayed if no value has been provided.');
 });
 
-test("specified where value", function() {
-	function specifiedWhereValue() {
-		$('#note').slideNote({
-			where: 100
-		});
-		return $.fn.slideNote.defaults.where;
-	}
-	equal(specifiedWhereValue(), 100, 'The specified value for where to display the note if no value is defined.');
-});
-
-test("default corner value", function() {
+test("corner", function() {
 	function defaultCornerValue() {
 		return $.fn.slideNote.defaults.corner
 	}
-	equal(defaultCornerValue(), 'right', 'The default corner where the note is displayed.');
+	equal(defaultCornerValue(), 'right', 'The corner in which the note will appear if no value has been specified.');
 });
 
-test("specified corner value", function() {
-	function specifiedWhereValue() {
-		$('#note').slideNote({
-			corner: 'left'
-		});
-		return $.fn.slideNote.defaults.corner;
-	}
-	equal(specifiedWhereValue(), 'left', 'The specified value for where to display the note if no value is defined.');
-});
-
-test("default url value", function() {
+test("URL", function() {
 	function defaultUrlValue() {
 		return $.fn.slideNote.defaults.url
 	}
-	equal(defaultUrlValue(), null, 'The default URL if none is specified.');
+	equal(defaultUrlValue(), null, 'Verifies the URL field is null when not specified.');
 });
 
-test("specified url value", function() {
-	function specifiedUrlValue() {
-		$('#note').slideNote({
-			url: 'ajax.html'
-		});
-		return $.fn.slideNote.defaults.url;
-	}
-	equal(specifiedUrlValue(), 'ajax.html', 'The value when a URL is specified.');
-});
-
-test("default container value", function() {
+test("container", function() {
 	function defaultUrlValue() {
 		return $.fn.slideNote.defaults.container
 	}
-	equal(defaultUrlValue(), '', 'The default ajax element ID if none is specified.');
+	equal(defaultUrlValue(), '', 'The default container value if no asynchronous element ID is provided.');
 });
 
-test("specified url value", function() {
-	function specifiedUrlValue() {
-		$('#note').slideNote({
-			container: 'container'
-		});
-		return $.fn.slideNote.defaults.container;
-	}
-	equal(specifiedUrlValue(), '#container', 'The value when a container is specified.');
+/*-------------------------------------------------------*
+ * Event Tests
+ *-------------------------------------------------------*/
+
+module("Event Tests");
+asyncTest("slideIn", function() {
+	setTimeout(function() {
+		$('#note').slideNote().trigger('slideIn');
+		start();
+		equal($('#note').is(':visible'), true, 'Verifies that the note is visible after the slideIn animation has fired.');
+	}, 1000);
+});
+
+asyncTest("slideOut", function() {
+	setTimeout(function() {
+		// This test needs some work as its based on CSS and not the true events.
+		$('#note').slideNote()
+			.css('display', 'block')
+			.trigger('slideOut');
+		start();
+		equal($('#note').css('display') === 'none', false, 'Verifies that the note is invisible after the slideOut animation has fired.');
+	}, 3000);
 });

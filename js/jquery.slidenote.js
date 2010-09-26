@@ -1,5 +1,5 @@
 /*
- * Slide Note
+ * SlideNote
  * A jQuery Plugin for flexible, customizable sliding notifications.
  *
  * Copyright 2010 Tom McFarlin, http://tommcfarlin.com
@@ -17,20 +17,17 @@
 		var opts = $.extend({}, $.fn.slideNote.defaults, options);
 		return this.each(function() {
 			
-			var $note = $(this).toggle().css(opts.corner, -1 * $(this).outerWidth());
-
-			if(opts.url !== null) {
-				_retrieveData($note, opts);
-			}
+			var $note = _init(this, opts);
 			
-			$(document).scroll(function() {
+			var oDoc = $.browser.msie === true ? window : document;
+			$(oDoc).scroll(function() {
 				if($(this).scrollTop() > opts.where) {
 					if(!$note.is(':visible')) {
-						_slideIn($note, opts);
+						$note.trigger('slideIn');
 					}
 				} else if ($(this).scrollTop() < opts.where && $note.queue('fx')[0] !== 'inprogress') {
 					if($note.is(':visible')) {
-						_slideOut($note, opts);
+						$note.trigger('slideOut');
 					}
 				}
 				
@@ -40,30 +37,53 @@
 		
 	};
 	
-	function _slideIn($obj, opts) {	
-		var direction = opts.corner === 'right' ? { 'right' : 0 } : { 'left' : 0 } ;
-		$obj.show().animate(direction, 1000, 'swing');
+	function _init(obj, opts) {
+	
+		$(obj).toggle()
+			.css(opts.corner, -1 * $(obj).outerWidth())
+			.css({
+				'position': 'fixed',
+				'bottom': 0
+			})
+			.bind('slideIn', function() {
+				_slideIn(obj, opts);
+			})
+			.bind('slideOut', function() {
+				_slideOut(obj, opts);
+			});	
+
+		if(opts.url !== null) {
+			_retrieveData(obj, opts);
+		}
+		
+		return $(obj);
+		
 	}
 	
-	function _slideOut($obj, opts) {
-		var direction = opts.corner === 'right' ? { 'right' : -1 * $obj.outerWidth() } : { 'left' : -1 * $obj.outerWidth() };
-		$obj.animate(direction, 1000, 'swing', function() {
+	function _slideIn(obj, opts) {	
+		var direction = opts.corner === 'right' ? { 'right' : 0 } : { 'left' : 0 } ;
+		$(obj).show().animate(direction, 1000, 'swing');
+	}
+	
+	function _slideOut(obj, opts) {
+		var direction = opts.corner === 'right' ? { 'right' : -1 * $(obj).outerWidth() } : { 'left' : -1 * $(obj).outerWidth() };
+		$(obj).animate(direction, 1000, 'swing', function() {
 			if($.slideNoteCount === 1) {
-				$obj.stop(true).hide();
+				$(obj).stop(true).hide();
 			} else {
-				$obj.hide();
+				$(obj).hide();
 			}
 		});
 	}
 	
-	function _retrieveData($obj, opts) {
+	function _retrieveData(obj, opts) {
 	
 		if(opts.container.length !== 0 && opts.container.indexOf('#') === -1) {
 			opts.container = '#' + opts.container;
 		}
 		
 		var sUrl = opts.container.length === 0 ? opts.url : opts.url + ' ' + opts.container;
-		$obj.load(sUrl);
+		$(obj).load(sUrl);
 		
 	}
 
