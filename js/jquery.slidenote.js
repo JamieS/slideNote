@@ -18,7 +18,7 @@
 		return this.each(function() {
 			
 			var $note = _init(this, opts);
-			
+		
 			var oDoc = $.browser.msie === true ? window : document;
 			$(oDoc).scroll(function() {
 				if($(this).scrollTop() > opts.where) {
@@ -50,12 +50,12 @@
 			})
 			.bind('slideOut', function() {
 				_slideOut(obj, opts);
-			});	
+			});
 
 		if(opts.url !== null) {
 			_retrieveData(obj, opts);
 		}
-		
+	
 		return $(obj);
 		
 	}

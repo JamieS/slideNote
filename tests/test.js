@@ -84,3 +84,28 @@ asyncTest("slideOut", function() {
 		equal($('#note').css('display') === 'none', false, 'Verifies that the note is invisible after the slideOut animation has fired.');
 	}, 3000);
 });
+
+/*-------------------------------------------------------*
+ * Ajax Tests
+ *-------------------------------------------------------*/
+module("Ajax Tests");
+asyncTest("retrieveData", function() {
+	$('#ajaxNote').slideNote({
+		url: 'ajax.html'
+	});
+	setTimeout(function() {
+		equal($('#ajaxNote').children(':first').attr('id') === 'container', true, 'Verifies that the entire page is properly appended to the DOM.');
+		start();
+	}, 1000);
+});
+
+asyncTest("retrieveSpecificData", function() {
+	$('#ajaxNote').slideNote({
+		url: 'ajax2.html',
+		container: 'container2'
+	});
+	setTimeout(function() {
+		equal($('#ajaxNote').children(':first').attr('id') === 'container2', true, 'Verifies that the specified element is properly appended to the DOM.');
+		start();
+	}, 1000);
+});
