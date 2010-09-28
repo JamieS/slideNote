@@ -19,21 +19,26 @@ HOW TO USE
 		where: 640,
 		corner: 'left',
 		url: 'ajax.html',
-		container: 'note'
+		container: 'note',
+		closeImage: '/images/close.png'
 	});
 	
 OPTIONS
 
-where 		specified how far down the user must scroll before the notification
-			slides into view
+where 			specified how far down the user must scroll before the notification
+						slides into view
 		
-corner		controls from which side of the screen the notification will slide in
+corner			controls from which side of the screen the notification will slide in
 
-URL			tells SlideNote from where to pull the data to use as the content of
-			the notification. if no container is specified, the entire page is used
+URL					tells SlideNote from where to pull the data to use as the content of
+						the notification. if no container is specified, the entire page is used
 		
-container	to be used in conjunction with 'URL.' when specified, only pulls
-			the element having the specified ID from the specified URL.
+container		to be used in conjunction with 'URL.' when specified, only pulls
+						the element having the specified ID from the specified URL.
+					
+closeImage	if specified, will display an image that can be used to close the
+						notification. once closed, the notification will not display again
+						until the user has scrolled passed the where value once more.
 
 CONTACT ME
 

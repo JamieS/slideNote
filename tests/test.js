@@ -61,6 +61,28 @@ test("container", function() {
 	equal(defaultUrlValue(), '', 'The default container value if no asynchronous element ID is provided.');
 });
 
+test("closeImage", function() {
+	function defaultCloseValue() {
+		return $.fn.slideNote.defaults.closeImage
+	}
+	equal(defaultCloseValue(), null, 'No close button should be displayed.');
+});
+ 
+/*-------------------------------------------------------*
+ * Specific Value Tests
+ *-------------------------------------------------------*/
+ 
+module("Specified Value Tests")
+test("closeImage", function() {
+	function closeOption() {
+		$('#note').slideNote({
+			closeImage: '/images/close.png'
+		});
+		return $('#note').children(':first').attr('id') === $('#note').attr('id') + '_close';
+	}
+	equal(closeOption(), true, 'Verifies that the close button is added to the notification.');
+});
+ 
 /*-------------------------------------------------------*
  * Event Tests
  *-------------------------------------------------------*/
@@ -85,9 +107,20 @@ asyncTest("slideOut", function() {
 	}, 3000);
 });
 
+asyncTest("closeImageEvent", function() {
+	setTimeout(function() {
+		$('#note').trigger('slideIn')
+				  .children(':first')
+				  .trigger('click');
+		start();
+		equal($('#note').css('display') === 'none', false, 'Verifies that the note is no longer visible once the close image has clicked.');
+	}, 4000);
+});
+
 /*-------------------------------------------------------*
  * Ajax Tests
  *-------------------------------------------------------*/
+ 
 module("Ajax Tests");
 asyncTest("retrieveData", function() {
 	$('#ajaxNote').slideNote({
