@@ -36,9 +36,9 @@ URL					tells SlideNote from where to pull the data to use as the content of
 container		to be used in conjunction with 'URL.' when specified, only pulls
 						the element having the specified ID from the specified URL.
 					
-closeImage	if specified, will display an image that can be used to close the
-						notification. once closed, the notification will not display again
-						until the user has scrolled passed the where value once more.
+closeImage	displays the image at the specified URL. When clicked, it will slide the 
+						note out of view. The note will not display until the next time the user 
+						scrolls passed the <strong>where</strong> value.
 
 CONTACT ME
 
