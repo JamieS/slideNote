@@ -54,15 +54,10 @@
 			.bind('slideOut', function(evt) {
 				_slideOut(evt, obj, opts);
 			});
-	
-		if(opts.closeImage !== null) {
-			_addCloseImage(obj, opts);
-		}
 		
-		if(opts.url !== null) {
-			_retrieveData(obj, opts);
-		}
-	
+		_retrieveData(obj, opts);
+		_addCloseImage(obj, opts);
+		
 		return $(obj);
 		
 	}
@@ -90,28 +85,34 @@
 	}
 	
 	function _retrieveData(obj, opts) {
-	
-		if(opts.container.length !== 0 && opts.container.indexOf('#') === -1) {
-			opts.container = '#' + opts.container;
+		if(opts.url !== null) {
+			if(opts.container.length !== 0 && opts.container.indexOf('#') === -1) {
+				opts.container = '#' + opts.container;
+			}
+			
+			var sUrl = opts.container.length === 0 ? opts.url : opts.url + ' ' + opts.container;
+			$(obj).load(sUrl, function() {
+				if(opts.closeImage !== null) {
+					_addCloseImage(obj, opts);
+				}
+			});
 		}
-		
-		var sUrl = opts.container.length === 0 ? opts.url : opts.url + ' ' + opts.container;
-		$(obj).load(sUrl);
-		
 	}
 	
 	function _addCloseImage(obj, opts) {
-		var oImg = document.createElement('img');
-		$(oImg).attr('src', opts.closeImage)
-					 .attr('alt', 'close')
-					 .attr('id', $(obj).attr('id') + '_close')
-					 .hover(function() {
-							$(this).css('cursor', 'pointer');
-					 }).click(function(evt) {
-							evt.stopPropagation();
-							$(this).trigger('slideOut');
-					 });
-		$(obj).prepend(oImg);
+		if(opts.closeImage !== null) {
+			var oImg = document.createElement('img');
+			$(oImg).attr('src', opts.closeImage)
+						 .attr('alt', 'close')
+						 .attr('id', $(obj).attr('id') + '_close')
+						 .hover(function() {
+								$(this).css('cursor', 'pointer');
+						 }).click(function(evt) {
+								evt.stopPropagation();
+								$(this).trigger('slideOut');
+						 });
+			$(obj).prepend(oImg);
+		}
 	}
 
 	$.fn.slideNote.defaults = {
