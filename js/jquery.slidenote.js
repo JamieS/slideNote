@@ -7,7 +7,7 @@
  * More information: http://slidenote.info
 */
 
-;(function($) {
+(function($) {
 
 	$.slideNoteCount = 0;
 	
@@ -120,7 +120,7 @@
 		corner: 'right',
 		url: null,
 		container: '',
-		closeImage: null,		
+		closeImage: null
 	};
 	
 	$.fn.slideNote.private = {
